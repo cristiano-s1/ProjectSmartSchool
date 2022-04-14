@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "a41aa119-27e0-46b3-b3d6-c996867d43f0": {
+      "ProjectGuid": "a41aa119-27e0-46b3-b3d6-c996867d43f0",
+      "DisplayName": "SmartSchool.API",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}
