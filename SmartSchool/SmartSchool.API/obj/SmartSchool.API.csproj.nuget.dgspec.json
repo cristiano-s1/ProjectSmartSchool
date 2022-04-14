@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Projetos\\Web\\.NET Core & Angular\\SmartSchool\\SmartSchool.API\\SmartSchool.API.csproj": {}
+    "C:\\Projetos\\Web\\.NET Core & Angular\\ProjectSmartSchool\\SmartSchool\\SmartSchool.API\\SmartSchool.API.csproj": {}
   },
   "projects": {
-    "C:\\Projetos\\Web\\.NET Core & Angular\\SmartSchool\\SmartSchool.API\\SmartSchool.API.csproj": {
+    "C:\\Projetos\\Web\\.NET Core & Angular\\ProjectSmartSchool\\SmartSchool\\SmartSchool.API\\SmartSchool.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Projetos\\Web\\.NET Core & Angular\\SmartSchool\\SmartSchool.API\\SmartSchool.API.csproj",
+        "projectUniqueName": "C:\\Projetos\\Web\\.NET Core & Angular\\ProjectSmartSchool\\SmartSchool\\SmartSchool.API\\SmartSchool.API.csproj",
         "projectName": "SmartSchool.API",
-        "projectPath": "C:\\Projetos\\Web\\.NET Core & Angular\\SmartSchool\\SmartSchool.API\\SmartSchool.API.csproj",
+        "projectPath": "C:\\Projetos\\Web\\.NET Core & Angular\\ProjectSmartSchool\\SmartSchool\\SmartSchool.API\\SmartSchool.API.csproj",
         "packagesPath": "C:\\Users\\cristianos1\\.nuget\\packages\\",
-        "outputPath": "C:\\Projetos\\Web\\.NET Core & Angular\\SmartSchool\\SmartSchool.API\\obj\\",
+        "outputPath": "C:\\Projetos\\Web\\.NET Core & Angular\\ProjectSmartSchool\\SmartSchool\\SmartSchool.API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -43,6 +43,36 @@
       "frameworks": {
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.1.24, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.1.24, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[3.1.24, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[3.1.24, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.1.24, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[3.1.5, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
