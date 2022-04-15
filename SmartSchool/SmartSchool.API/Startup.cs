@@ -1,8 +1,9 @@
 using SmartSchool.API.Context;
-using Microsoft.EntityFrameworkCore;
+using SmartSchool.API.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -20,12 +21,18 @@ namespace SmartSchool.API
         // Use este método para adicionar serviços ao contêiner.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Adicionar o contexto e string de conexão ao serviço
+            #region CONEXÃO COM BANCO DE DADOS
             services.AddDbContext<SmartContext>(
                 context => context.UseSqlite(Configuration.GetConnectionString("Default"))
             );
+            #endregion
 
             services.AddControllers();
+
+            #region INJEÇÃO DE DEPENDÊNCIA
+            //Injetar o repository dentro das controllers com obstração do contexto por meio da interface.
+            services.AddScoped<IBaseRepository, BaseRepository>();
+            #endregion
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -2,7 +2,7 @@
 
 namespace SmartSchool.API.Repository
 {
-    public interface IRepository
+    public interface IBaseRepository
     {
         // Todos os métodos vai ter como parâmetro um tipo classe
         void Add<T>(T entity) where T : class;

@@ -5,12 +5,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SmartSchool.API.Repository
 {
-    public class Repository : IRepository
+    public class BaseRepository : IBaseRepository
     {
         // Construtor para receber o contexto
         private readonly SmartContext _context;
 
-        public Repository(SmartContext context)
+        public BaseRepository(SmartContext context)
         {
             _context = context;
         }
