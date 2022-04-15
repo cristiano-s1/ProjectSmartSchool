@@ -20,13 +20,13 @@ namespace SmartSchool.API.Context
       
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            #region Referencia para criar tabela N para N
+            #region REFERÊNCIA PARA CRIAR TABELA N PARA N
             builder.Entity<AlunoDisciplina>().HasKey(AD => new { AD.AlunoId, AD.DisciplinaId });
 
             builder.Entity<AlunoCurso>().HasKey(AD => new { AD.AlunoId, AD.CursoId });
             #endregion
 
-            #region Carga Inicial
+            #region CARGA INICIAL
             builder.Entity<Professor>()
                 .HasData(new List<Professor>(){
                     new Professor(1, 1, "Lauro", "Oliveira"),
