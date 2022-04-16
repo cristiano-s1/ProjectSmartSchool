@@ -9,27 +9,45 @@ using SmartSchool.API.Repository;
 
 namespace SmartSchool.API.V1.Controllers
 {
-    [Route("api/V1/[controller]")]
+    /// <summary>
+    /// Versão 1 do meu controller de Aluno.
+    /// </summary>
+    /// 
     [ApiController]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class AlunoController : ControllerBase
     {
         // Construtor para receber o contexto       
         private readonly IBaseRepository _repository;
         public readonly IMapper _mapper;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="repository"></param>
+        /// <param name="mapper"></param>
         public AlunoController(IBaseRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
         }
 
-
+        /// <summary>
+        /// Método responsavel por retornar apenas um único AlunoDto
+        /// </summary>
+        /// <returns></returns>
+        // api/V1/Aluno/GetRegister
         [HttpGet("GetRegister")]
         public IActionResult GetRegister()
         {
             return Ok(new AlunoRegistrarDto());
         }
 
+        /// <summary>
+        /// Método responsável para retornar todos os meus alunos
+        /// </summary>
+        /// <returns></returns>
         // GET: api/V1/Aluno
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] PageParams pageParams) // Passando como parametro a classe de paginação
@@ -45,6 +63,11 @@ namespace SmartSchool.API.V1.Controllers
             return Ok(alunosResult);
         }
 
+        /// <summary>
+        /// Método responsável por retornar apenas um Aluno por meio do código ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // GET: api/V1/Aluno/5
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
@@ -58,6 +81,11 @@ namespace SmartSchool.API.V1.Controllers
             return Ok(alunoDto);
         }
 
+        /// <summary>
+        /// Método responsável por criar um Aluno 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         // POST: api/V1/Aluno
         [HttpPost]
         public IActionResult Post(AlunoRegistrarDto model)
@@ -76,6 +104,12 @@ namespace SmartSchool.API.V1.Controllers
             return BadRequest("Aluno não cadastrado");
         }
 
+        /// <summary>
+        /// Método responsável por atualizar um Aluno 
+        /// </summary>
+        /// <param name="id"></param>
+        /// /// <param name="model"></param>
+        /// <returns></returns>
         // PUT: api/V1/Aluno/5
         [HttpPut("{id}")]
         public IActionResult Put(int id, AlunoRegistrarDto model)
@@ -97,6 +131,12 @@ namespace SmartSchool.API.V1.Controllers
             return BadRequest("Aluno não atualizado");
         }
 
+        /// <summary>
+        /// Método responsável por atualizar um Aluno 
+        /// </summary>
+        /// <param name="id"></param>
+        /// /// <param name="model"></param>
+        /// <returns></returns>
         // PATCH: api/V1/Aluno/5
         [HttpPatch("{id}")]
         public IActionResult Patch(int id, AlunoRegistrarDto model)
@@ -118,6 +158,11 @@ namespace SmartSchool.API.V1.Controllers
             return BadRequest("Aluno não atualizado");
         }
 
+        /// <summary>
+        /// Método responsável por deletar um Aluno 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // DELETE: api/V1/Aluno/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)

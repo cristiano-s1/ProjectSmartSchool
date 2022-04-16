@@ -9,8 +9,13 @@ using SmartSchool.API.Repository;
 
 namespace SmartSchool.API.V2.Controllers
 {
-    [Route("api/V2/[controller]")]
+    /// <summary>
+    /// Versão 2 do meu controller de Aluno.
+    /// </summary>
+    /// 
     [ApiController]
+    [ApiVersion("2.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class AlunoController : ControllerBase
     {
         // Construtor para receber o contexto       
@@ -21,13 +26,6 @@ namespace SmartSchool.API.V2.Controllers
         {
             _repository = repository;
             _mapper = mapper;
-        }
-
-
-        [HttpGet("GetRegister")]
-        public IActionResult GetRegister()
-        {
-            return Ok(new AlunoRegistrarDto());
         }
 
         // GET: api/V1/Aluno
@@ -43,19 +41,6 @@ namespace SmartSchool.API.V2.Controllers
             Response.AddPagination(alunos.CurrentPage, alunos.PageSize, alunos.TotalCount, alunos.TotalPages);
 
             return Ok(alunosResult);
-        }
-
-        // GET: api/V1/Aluno/5
-        [HttpGet("{id}")]
-        public IActionResult GetById(int id)
-        {
-            var aluno = _repository.GetAlunoById(id, false);
-            if (aluno == null) return BadRequest("O Aluno não foi encontrado");
-
-            // Dto
-            var alunoDto = _mapper.Map<AlunoDto>(aluno);
-
-            return Ok(alunoDto);
         }
 
         // POST: api/V1/Aluno

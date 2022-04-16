@@ -7,8 +7,13 @@ using System.Collections.Generic;
 
 namespace SmartSchool.API.V2.Controllers
 {
-    [Route("api/V2/[controller]")]
+    /// <summary>
+    /// Versão 2 do meu controller de Professor.
+    /// </summary>
+    /// 
     [ApiController]
+    [ApiVersion("2.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class ProfessorController : ControllerBase
     {
         // Construtor para receber o contexto
@@ -21,13 +26,6 @@ namespace SmartSchool.API.V2.Controllers
             _mapper = mapper;     
         }
 
-
-        [HttpGet("GetRegister")]
-        public IActionResult GetRegister()
-        {
-            return Ok(new ProfessorRegistrarDto());
-        }
-
         //GET: api/V1/Professor
         [HttpGet]
         public IActionResult Get()
@@ -35,18 +33,6 @@ namespace SmartSchool.API.V2.Controllers
             var professor = _repository.GetAllProfessores(true);
 
             return Ok(_mapper.Map<IEnumerable<ProfessorDto>>(professor));
-        }
-
-        // GET: api/V1/Professor/5
-        [HttpGet("{id}")]
-        public IActionResult GetById(int id)
-        {
-            var professor = _repository.GetProfessorById(id, false);
-            if (professor == null) return BadRequest("O Professor não foi encontrado");
-
-            var professorDto = _mapper.Map<ProfessorDto>(professor);
-
-            return Ok(professorDto);
         }
 
         // POST: api/V1/Professor
