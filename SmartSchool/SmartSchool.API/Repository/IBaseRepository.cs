@@ -1,4 +1,6 @@
-﻿using SmartSchool.Models;
+﻿using SmartSchool.Helpers;
+using SmartSchool.Models;
+using System.Threading.Tasks;
 
 namespace SmartSchool.API.Repository
 {
@@ -13,8 +15,10 @@ namespace SmartSchool.API.Repository
 
         //Chamada dos métodos IRepository
 
-        // Lista de aluno
-        //Task<PageList<Aluno>> GetAllAlunosAsync(PageParams pageParams, bool includeProfessor = false); 
+        // Forma Asincrona (Herda de PageList)
+        Task<PageList<Aluno>> GetAllAlunosAsync(PageParams pageParams, bool includeProfessor = false);
+
+        // Forma Sincrona
         Aluno[] GetAllAlunos(bool includeProfessor = false);
         Aluno[] GetAllAlunosByDisciplinaId(int disciplinaId, bool includeProfessor = false);
         Aluno GetAlunoById(int alunoId, bool includeProfessor = false);

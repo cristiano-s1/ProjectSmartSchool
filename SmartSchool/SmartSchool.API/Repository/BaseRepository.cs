@@ -1,5 +1,7 @@
 ﻿using System.Linq;
 using SmartSchool.Models;
+using SmartSchool.Helpers;
+using System.Threading.Tasks;
 using SmartSchool.API.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -33,7 +35,7 @@ namespace SmartSchool.API.Repository
 
         public bool SaveChanges()
         {
-            throw new System.NotImplementedException();
+            return (_context.SaveChanges() > 0);
         }
         #endregion
 
@@ -101,26 +103,26 @@ namespace SmartSchool.API.Repository
             return query.ToArray();
         }
 
-        //// Método para paginação
-        //public async Task<PageList<Aluno>> GetAllAlunosAsync(PageParams pageParams, bool includeProfessor = false)
-        //{
-        //    // select * from Aluno
-        //    IQueryable<Aluno> query = _context.Alunos;
+        // Método para paginação
+        public async Task<PageList<Aluno>> GetAllAlunosAsync(PageParams pageParams, bool includeProfessor = false)
+        {
+            // select * from Aluno
+            IQueryable<Aluno> query = _context.Alunos;
 
-        //    if (includeProfessor)
-        //    {
-        //        // join
-        //        query = query.Include(a => a.AlunosDisciplinas)
-        //                     .ThenInclude(ad => ad.Disciplina)
-        //                     .ThenInclude(d => d.Professor);
-        //    }
+            if (includeProfessor)
+            {
+                // join
+                query = query.Include(a => a.AlunosDisciplinas)
+                             .ThenInclude(ad => ad.Disciplina)
+                             .ThenInclude(d => d.Professor);
+            }
 
-        //    // order by id desc
-        //    query = query.AsNoTracking().OrderBy(a => a.Id);
+            // order by id desc
+            query = query.AsNoTracking().OrderBy(a => a.Id);
 
-        //    // paginação
-        //    return await PageList<Aluno>.CreateAsync(query, pageParams.PageNumber, pageParams.PageSize);
-        //}
+            // retorna a paginação
+            return await PageList<Aluno>.CreateAsync(query, pageParams.PageNumber, pageParams.PageSize);
+        }
         #endregion
 
         #region PROFESSORES

@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace SmartSchool.API
 {
@@ -27,12 +28,23 @@ namespace SmartSchool.API
             );
             #endregion
 
-            services.AddControllers();
+            // Adicionar as controllers ao serviço
+            // Irá ignorar o loop infinito dos relacionamento dos modelos
+            services.AddControllers()
+                    .AddNewtonsoftJson(
+                        opt => opt.SerializerSettings.ReferenceLoopHandling =
+                            Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
+            // Adicionar pacote AutoMapper ao serviço
+            // Fazer o mapeamento entre os Dtos e os Dominios
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+           
             #region INJEÇÃO DE DEPENDÊNCIA
             //Injetar o repository dentro das controllers com obstração do contexto por meio da interface.
             services.AddScoped<IBaseRepository, BaseRepository>();
             #endregion
+
+            services.AddControllers();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
