@@ -5,6 +5,11 @@
       "ProjectGuid": "a41aa119-27e0-46b3-b3d6-c996867d43f0",
       "DisplayName": "SmartSchool.API",
       "ColorIndex": 0
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Arquivos Diversos",
+      "ColorIndex": -1
     }
   },
   "NextColorIndex": 1
