@@ -6,6 +6,11 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { Aluno } from 'src/app/models/Aluno';
+import { Professor } from 'src/app/models/Professor';
+import { AlunoService } from 'src/app/services/aluno.service';
+import { ProfessorService } from 'src/app/services/professor.service';
+import { ProfessoresComponent } from '../professores/professores.component';
 
 @Component({
   selector: 'app-alunos',
@@ -17,38 +22,14 @@ export class AlunosComponent implements OnInit {
   public modalRef?: BsModalRef; //Modal
   public alunoForm?: FormGroup; //Formulário
   public titulo = 'Alunos';
-  public alunoSelecionado: Aluno;
+  public alunoSelecionado?: Aluno;
   public textSimple?: string;
-  public profsAlunos: Professor[];
-
-  private unsubscriber = new Subject();
-
-  public alunos: Aluno[];
-  public aluno: Aluno;
+  public profsAlunos?: Professor[];
+  public alunos?: Aluno[];
+  public aluno?: Aluno;
   public msnDeleteAluno?: string;
   public modeSave = 'post';
-
-  openModal(template: TemplateRef<any>, alunoId: number) {
-    this.professoresAlunos(template, alunoId);
-  }
-
-  closeModal() {
-    this.modalRef?.hide();
-  }
-
-  professoresAlunos(template: TemplateRef<any>, id: number) {
-    this.spinner.show();
-    this.professorService.getByAlunoId(id)
-      .pipe(takeUntil(this.unsubscriber))
-      .subscribe((professores: Professor[]) => {
-        this.profsAlunos = professores;
-        this.modalRef = this.modalService.show(template);
-      }, (error: any) => {
-        this.toastr.error(`erro: ${error}`);
-        console.log(error);
-      }, () => this.spinner.hide()
-    );
-  }
+  private unsubscriber = new Subject();
 
   constructor(
     private alunoService: AlunoService,
@@ -67,11 +48,22 @@ export class AlunosComponent implements OnInit {
     this.carregarAlunos();
   }
 
-  ngOnDestroy(): void {
-    this.unsubscriber.next();
-    this.unsubscriber.complete();
+  //Toastr e Spinner
+  professoresAlunos(template: TemplateRef<any>, id: number) {
+    this.spinner.show();
+    this.professorService.getByAlunoId(id)
+      .pipe(takeUntil(this.unsubscriber))
+      .subscribe((professores: Professor[]) => {
+        this.profsAlunos = professores;
+        this.modalRef = this.modalService.show(template);
+      }, (error: any) => {
+        this.toastr.error(`erro: ${error}`);
+        console.log(error);
+      }, () => this.spinner.hide()
+    );
   }
 
+  //Criação do Formulário
   criarForm() {
     this.alunoForm = this.fb.group({
       id: [0],
@@ -81,17 +73,18 @@ export class AlunosComponent implements OnInit {
     });
   }
 
+  //Post
   saveAluno() {
-    if (this.alunoForm.valid) {
+    if (this.alunoForm?.valid) {
       this.spinner.show();
 
       if (this.modeSave === 'post') {
         this.aluno = {...this.alunoForm.value};
       } else {
-        this.aluno = {id: this.alunoSelecionado.id, ...this.alunoForm.value};
+        this.aluno = {id: this.alunoSelecionado?.id, ...this.alunoForm.value};
       }
 
-      this.alunoService[this.modeSave](this.aluno)
+      this.alunoService?[this.modeSave](this.aluno)
         .pipe(takeUntil(this.unsubscriber))
         .subscribe(
           () => {
@@ -106,8 +99,9 @@ export class AlunosComponent implements OnInit {
     }
   }
 
+  //Get
   carregarAlunos() {
-    const id = +this.route.snapshot.paramMap.get('id');
+    const id = + this.route.snapshot.paramMap.get('id');
 
     this.spinner.show();
     this.alunoService.getAll()
@@ -135,6 +129,19 @@ export class AlunosComponent implements OnInit {
 
   voltar() {
     this.alunoSelecionado = null;
+  }
+
+  openModal(template: TemplateRef<any>, alunoId: number) {
+    this.professoresAlunos(template, alunoId);
+  }
+
+  closeModal() {
+    this.modalRef?.hide();
+  }
+
+  ngOnDestroy(): void { //Limpar 
+    this.unsubscriber.next();
+    this.unsubscriber.complete();
   }
 
 }
